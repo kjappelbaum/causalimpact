@@ -670,6 +670,11 @@ class CausalImpact(BaseCausal):
             raise ValueError('pre_period must span at least 3 time points.')
         if checked_post_period[1] < checked_post_period[0]:
             raise ValueError('post_period last number must be bigger than its first.')
+        if checked_post_period[0] <= checked_pre_period[1]:
+            raise ValueError(f'post_period first value ({post_period[0]}) must '
+                             'be bigger than the second value of pre_period '
+                             f'({pre_period[1]}).')
+
         result = [
             data.loc[pre_period[0]: pre_period[1], :],
             data.loc[post_period[0]: post_period[1], :]

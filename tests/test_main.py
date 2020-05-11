@@ -408,6 +408,11 @@ def test_periods_validation(rand_data, date_rand_data):
     assert str(excinfo.value) == 'post_period last number must be bigger than its first.'
 
     with pytest.raises(ValueError) as excinfo:
+        CausalImpact(rand_data, [5, 10], [10, 15])
+    assert str(excinfo.value) == ('post_period first value (10) must be bigger than the '
+                                  'second value of pre_period (10).')
+
+    with pytest.raises(ValueError) as excinfo:
         CausalImpact(date_rand_data, ['20180101', '20180110'],
                      ['20180115', '20180111'])
     assert str(excinfo.value) == 'post_period last number must be bigger than its first.'
@@ -429,6 +434,12 @@ def test_periods_validation(rand_data, date_rand_data):
         CausalImpact(date_rand_data, ['20180105', '20180101'],
                      ['20180115', '20180111'])
     assert str(excinfo.value) == 'pre_period last number must be bigger than its first.'
+
+    with pytest.raises(ValueError) as excinfo:
+        CausalImpact(date_rand_data, ['20180105', '20180110'],
+                     ['20180110', '20180115'])
+    assert str(excinfo.value) == ('post_period first value (20180110) must be bigger '
+                                  'than the second value of pre_period (20180110).')
 
     with pytest.raises(ValueError) as excinfo:
         CausalImpact(rand_data, 0, [15, 11])
