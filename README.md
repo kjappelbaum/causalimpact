@@ -19,12 +19,14 @@ Please refer to <a href=http://nbviewer.jupyter.org/github/dafiti/causalimpact/b
 
 ## Requirements
 
- - python{2.7, 3.5, 3.6, 3.7}
+ - python{2.7, 3.6, 3.7, 3.8} \*
  - numpy
  - scipy
  - statsmodels
  - matplotlib
  - jinja2
+
+\* **We no longer support Python2.7!** Please refer to the tag `0.0.16` (`pip install pycausalimpact==0.0.16`) for the latest available supported version.
 
 ## Getting Started
 We recommend this [presentation](https://www.youtube.com/watch?v=GTgZfCltMm8) by Kay Brodersen (one of the creators of the causal impact implementation in R).
