@@ -21,6 +21,7 @@ matrix:
       sudo: true
 install:
   - pip install -U setuptools tox coveralls
+  - pip install -U pip
 script:
   - if [ $TOX_ENV == "isort-check" ];
     then make isort-check;
