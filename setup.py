@@ -44,7 +44,7 @@ install_requires = [
 ]
 
 tests_require = [
-    'pytest',
+    'pytest==5.4.2',
     'pytest-cov',
     'mock',
     'tox'
