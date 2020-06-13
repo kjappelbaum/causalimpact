@@ -35,39 +35,21 @@ if sys.argv[-1] == 'publish':
     os.system('twine upload dist/*')
     sys.exit()
 
-py_version = sys.version_info
-if py_version.major == 2 and py_version.minor == 7:
-    install_requires = [
-        'numpy==1.16.6',
-        'scipy==1.2.2',
-        'pandas==0.24.2',
-        'statsmodels==0.9.0',
-        'matplotlib==2.2.4',
-        'jinja2>=2.10'
-    ]
+install_requires = [
+    'numpy',
+    'scipy',
+    'statsmodels>=0.11.0',
+    'matplotlib>=2.2.3',
+    'jinja2>=2.10'
+]
 
-    tests_require = [
-        'pytest==4.6.5',
-        'pytest-cov',
-        'mock==3.0.5',
-        'tox'
-    ]
-
-else:
-    install_requires = [
-        'numpy',
-        'scipy',
-        'statsmodels>=0.11.0',
-        'matplotlib>=2.2.3',
-        'jinja2>=2.10'
-    ]
-
-    tests_require = [
-        'pytest',
-        'pytest-cov',
-        'mock',
-        'tox'
-    ]
+tests_require = [
+    'pluggy>=0.13.1',
+    'pytest',
+    'pytest-cov',
+    'mock',
+    'tox'
+]
 
 setup_requires = [
     'flake8',
