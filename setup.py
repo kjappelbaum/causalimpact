@@ -44,7 +44,6 @@ install_requires = [
 ]
 
 tests_require = [
-    'pluggy>=0.13.1',
     'pytest',
     'pytest-cov',
     'mock',
