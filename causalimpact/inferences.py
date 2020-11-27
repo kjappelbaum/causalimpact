@@ -380,13 +380,15 @@ class Inferences(object):
         sum_abs_effect_lower = sum_post_y - sum_post_pred_upper
         sum_abs_effect_upper = sum_post_y - sum_post_pred_lower
 
-        rel_effect = abs_effect / mean_post_pred
-        rel_effect_lower = abs_effect_lower / mean_post_pred
-        rel_effect_upper = abs_effect_upper / mean_post_pred
+        abs_mean_post_pred = np.abs(mean_post_pred)
+        rel_effect = abs_effect / abs_mean_post_pred
+        rel_effect_lower = abs_effect_lower / abs_mean_post_pred
+        rel_effect_upper = abs_effect_upper / abs_mean_post_pred
 
-        sum_rel_effect = sum_abs_effect / sum_post_pred
-        sum_rel_effect_lower = sum_abs_effect_lower / sum_post_pred
-        sum_rel_effect_upper = sum_abs_effect_upper / sum_post_pred
+        abs_sum_post_pred = np.abs(sum_post_pred)
+        sum_rel_effect = sum_abs_effect / abs_sum_post_pred
+        sum_rel_effect_lower = sum_abs_effect_lower / abs_sum_post_pred
+        sum_rel_effect_upper = sum_abs_effect_upper / abs_sum_post_pred
 
         # Prepares all this data into a DataFrame for later retrieval, such as when
         # running the `summary` method.

@@ -556,6 +556,41 @@ def test_default_causal_inferences(fix_path):
     assert ci.inferences.index.dtype == data.index.dtype
 
 
+def test_default_causal_inferences_negative(fix_path):
+    np.random.seed(1)
+    data = pd.read_csv(os.path.join(fix_path, 'google_data.csv'))
+    del data['t']
+    shift = 200
+    data['y'] =  data['y'] - shift
+
+    pre_period = [0, 60]
+    post_period = [61, 90]
+    cum_shift = (90-60) * shift
+    ci = CausalImpact(data, pre_period, post_period)
+    assert np.floor(ci.summary_data['average']['actual']) == 156 - shift  
+    assert np.floor(ci.summary_data['average']['predicted']) == 129 - shift  
+    assert np.floor(ci.summary_data['average']['predicted_lower']) == 123 - shift + 1 # -1 due to round-off
+    assert np.floor(ci.summary_data['average']['predicted_upper']) == 134 - shift 
+    assert int(ci.summary_data['average']['abs_effect']) == 27
+    assert round(ci.summary_data['average']['abs_effect_lower'], 1) == 21.6
+    assert int(ci.summary_data['average']['abs_effect_upper']) == 31
+    assert round(ci.summary_data['average']['rel_effect'], 1) == 0.4
+    assert round(ci.summary_data['average']['rel_effect_lower'], 2) == 0.30
+    assert round(ci.summary_data['average']['rel_effect_upper'], 2) == 0.45
+    assert np.floor(ci.summary_data['cumulative']['actual']) == 4687 - cum_shift
+    assert np.floor(ci.summary_data['cumulative']['predicted']) == 3876 - cum_shift 
+    assert np.floor(ci.summary_data['cumulative']['predicted_lower']) == 3729 - cum_shift 
+    assert np.floor(ci.summary_data['cumulative']['predicted_upper']) == 4040 - cum_shift 
+    assert int(ci.summary_data['cumulative']['abs_effect']) == 810
+    assert int(ci.summary_data['cumulative']['abs_effect_lower']) == 646
+    assert int(ci.summary_data['cumulative']['abs_effect_upper']) == 957
+    assert round(ci.summary_data['cumulative']['rel_effect'], 1) == 0.4
+    assert round(ci.summary_data['cumulative']['rel_effect_lower'], 2) == 0.30
+    assert round(ci.summary_data['cumulative']['rel_effect_upper'], 2) == 0.45
+
+    assert round(ci.p_value, 1) == 0.0
+    assert ci.inferences.index.dtype == data.index.dtype
+
 def test_default_causal_inferences_w_date(fix_path):
     np.random.seed(1)
     data = pd.read_csv(os.path.join(fix_path, 'google_data.csv'))
