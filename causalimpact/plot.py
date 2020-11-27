@@ -26,7 +26,7 @@ class Plot(object):
     """Takes all the vectors and final analysis performed in the post-period inference
     to plot final graphics.
     """
-    def plot(self, panels=['original', 'pointwise', 'cumulative'], figsize=(15, 12)):
+    def plot(self, panels=['original', 'pointwise', 'cumulative'], figsize=(15, 12), return_fig=False):
         """Plots inferences results related to causal impact analysis.
 
         Args
@@ -35,6 +35,9 @@ class Plot(object):
             Indicates which plot should be considered in the graphics.
           figsize: tuple.
             Changes the size of the graphics plotted.
+          return_fig: bool.
+            Will return the figure object instead of running plt.show().
+            Default: False.
 
         Raises
         ------
@@ -125,6 +128,8 @@ class Plot(object):
                     'diffuse initialization.'.format(llb))
             fig.text(0.1, 0.01, text, fontsize='large')
 
+        if return_fig:
+            return fig
         plt.show()
 
     def _get_plotter(self):  # pragma: no cover
